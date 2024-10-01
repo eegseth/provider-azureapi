@@ -1,19 +1,19 @@
-# 🚨 PLEASE NOTE 🚨: This repository is no longer maintained. Use its successor [Upjet Provider Template](https://github.com/upbound/upjet-provider-template) instead. See details in https://github.com/crossplane/terrajet/issues/308
+# 🚨 PLEASE NOTE 🚨: This repository is no longer maintained. Use its successor [Upjet Provider AzureAPI](https://github.com/upbound/upjet-provider-azureapi) instead. See details in https://github.com/crossplane/terrajet/issues/308
 
 ---
-# Terrajet Template Provider
+# Terrajet AzureAPI Provider
 
-`provider-jet-template` is a [Crossplane](https://crossplane.io/) provider that
+`provider-jet-azureapi` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane/terrajet) code
 generation tools and exposes XRM-conformant managed resources for the
-Template API.
+AzureAPI API.
 
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/crossplane-contrib/provider-jet-template/releases):
+to the [latest release](https://github.com/crossplane-contrib/provider-jet-azureapi/releases):
 ```
-kubectl crossplane install provider crossplane/provider-jet-template:v0.1.0
+kubectl crossplane install provider crossplane/provider-jet-azureapi:v0.1.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -23,7 +23,7 @@ kubectl apply -f examples/install.yaml
 
 Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-template).
+You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-azureapi).
 
 ## Developing
 
@@ -53,7 +53,7 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/crossplane-contrib/provider-jet-template/issues).
+open an [issue](https://github.com/crossplane-contrib/provider-jet-azureapi/issues).
 
 ## Contact
 
@@ -67,17 +67,17 @@ Please use the following to reach members of the community:
 
 ## Governance and Owners
 
-provider-jet-template is run according to the same
+provider-jet-azureapi is run according to the same
 [Governance](https://github.com/crossplane/crossplane/blob/master/GOVERNANCE.md)
 and [Ownership](https://github.com/crossplane/crossplane/blob/master/OWNERS.md)
 structure as the core Crossplane project.
 
 ## Code of Conduct
 
-provider-jet-template adheres to the same [Code of
+provider-jet-azureapi adheres to the same [Code of
 Conduct](https://github.com/crossplane/crossplane/blob/master/CODE_OF_CONDUCT.md)
 as the core Crossplane project.
 
 ## Licensing
 
-provider-jet-template is under the Apache 2.0 license.
+provider-jet-azureapi is under the Apache 2.0 license.

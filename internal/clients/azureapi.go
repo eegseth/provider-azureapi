@@ -27,7 +27,7 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/terraform"
 
-	"github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-jet-azureapi/apis/v1alpha1"
 )
 
 const (
@@ -36,7 +36,11 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal azureapi credentials as JSON"
+	subscription_id         = "subscription_id"
+	client_id               = "client_id"
+	client_secret           = "client_secret"
+	tenant_id               = "tenant_id"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -69,24 +73,24 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		templateCreds := map[string]string{}
-		if err := json.Unmarshal(data, &templateCreds); err != nil {
+		azureapiCreds := map[string]string{}
+		if err := json.Unmarshal(data, &azureapiCreds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// set environment variables for sensitive provider configuration
-		// Deprecated: In shared gRPC mode we do not support injecting
-		// credentials via the environment variables. You should specify
-		// credentials via the Terraform main.tf.json instead.
-		/*ps.Env = []string{
-			fmt.Sprintf("%s=%s", "HASHICUPS_USERNAME", templateCreds["username"]),
-			fmt.Sprintf("%s=%s", "HASHICUPS_PASSWORD", templateCreds["password"]),
-		}*/
-		// set credentials in Terraform provider configuration
-		/*ps.Configuration = map[string]interface{}{
-			"username": templateCreds["username"],
-			"password": templateCreds["password"],
-		}*/
+		ps.Configuration = map[string]interface{}{}
+		if v, ok := azureapiCreds[subscription_id]; ok {
+			ps.Configuration[subscription_id] = v
+		}
+		if v, ok := azureapiCreds[client_id]; ok {
+			ps.Configuration[client_id] = v
+		}
+		if v, ok := azureapiCreds[client_secret]; ok {
+			ps.Configuration[client_secret] = v
+		}
+		if v, ok := azureapiCreds[tenant_id]; ok {
+			ps.Configuration[tenant_id] = v
+		}
 		return ps, nil
 	}
 }

@@ -23,12 +23,14 @@ import (
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane-contrib/provider-jet-template/config/null"
+	"github.com/crossplane-contrib/provider-jet-azureapi/config/dataplaneresources"
+	"github.com/crossplane-contrib/provider-jet-azureapi/config/null"
+	"github.com/crossplane-contrib/provider-jet-azureapi/config/resources"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/crossplane-contrib/provider-jet-template"
+	resourcePrefix = "azureapi"
+	modulePath     = "github.com/crossplane-contrib/provider-jet-azureapi"
 )
 
 //go:embed schema.json
@@ -44,10 +46,16 @@ func GetProvider() *tjconfig.Provider {
 	}
 
 	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn))
+		tjconfig.WithDefaultResourceFn(defaultResourceFn),
+		tjconfig.WithIncludeList([]string{
+			"azapi_resource$",
+			"azapi_data_plane_resource$",
+		}))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
+		dataplaneresources.Configure,
+		resources.Configure,
 		null.Configure,
 	} {
 		configure(pc)
